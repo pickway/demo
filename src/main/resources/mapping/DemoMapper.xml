@@ -3,6 +3,22 @@
 <mapper namespace="com.example.demo.mapper.DemoMapper">
 
     <select id="demo" resultType="com.example.demo.entity.DemoEntity">
-        select * from demo;
+        select * from demo
+    </select>
+
+    <select id="pageHelper" resultType="com.example.demo.entity.DemoEntity"
+            parameterType="com.example.demo.dto.demo.DemoDto">
+        select * from demo t
+        <where>
+            <if test="id != null and id != ''">
+                and t.id = #{id}
+            </if>
+            <if test="code != null and code != ''">
+                and t.code = #{code}
+            </if>
+            <if test="codeName != null and codeName != ''">
+                and instr(t.code_name,#{codeName}) > 0
+            </if>
+        </where>
     </select>
 </mapper>
