@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.demo.DemoDto;
 import com.example.demo.entity.DemoEntity;
+import com.example.demo.model.ResultModel;
 import com.example.demo.service.DemoService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -28,15 +29,15 @@ public class DemoController {
 
     @GetMapping("/test")
     @ApiOperation("测试接口")
-    public String test() {
-        return demoService.demo().get(0).toString();
+    public ResultModel test() {
+        return ResultModel.ofData(demoService.demo().get(0).toString());
     }
 
     @GetMapping("/pageHelper")
     @ApiOperation("分页测试")
-    public PageInfo<DemoEntity> pageHelper(DemoDto demoDto) {
+    public ResultModel<PageInfo<DemoEntity>> pageHelper(DemoDto demoDto) {
         List<DemoEntity> data = demoService.pageHelper(demoDto);
-        return new PageInfo<>(data);
+        return ResultModel.ofData(new PageInfo<>(data));
     }
 
 }

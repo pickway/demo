@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -16,12 +17,16 @@ import javax.persistence.Table;
 @Data
 @Table(name = "DEMO")
 public class DemoEntity {
+
     @Id
+    @ApiModelProperty("主键id")
     private String id;
 
     @Column
+    @ApiModelProperty("响应码")
     private String code;
 
     @Column(name = "code_name")
+    @ApiModelProperty("响应码中文翻译")
     private String codeName;
 }

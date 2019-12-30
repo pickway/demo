@@ -2,8 +2,13 @@ package com.example.demo.dto.page;
 
 import com.example.demo.constants.CommonCons;
 import com.github.pagehelper.PageHelper;
+import com.google.common.base.Joiner;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author: Weidong
@@ -31,6 +36,14 @@ public class PageRequest {
     }
 
     public void initPageHelper(){
+        if (StringUtils.isNotBlank(order) && StringUtils.isNotBlank(sord)){
+            List<String> orderArrays = new ArrayList<>();
+            String[] orders = order.split(",");
+            for (String iorder : orders){
+                orderArrays.add(iorder + " " + sord);
+            }
+            this.order = Joiner.on(",").join(orderArrays);
+        }
         PageHelper.startPage(this.pageNum, this.pageSize ,this.order);
     }
 }
