@@ -12,6 +12,7 @@ mybatis:
   mapper-locations: classpath:mapping/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true
+  type-aliases-package: com.example.demo.model.*
 
 pagehelper:
     helperDialect: mysql
@@ -20,3 +21,5 @@ pagehelper:
     params: count=countSql
 logging:
   config: classpath:log4j2-spring.xml
+
+

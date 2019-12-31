@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.SysUserMapper">
+
+    <select id="findByNickName" parameterType="String" resultType="SysUserModel">
+        select * from sys_user t where t.nick_name = #{nickName}
+    </select>
+
+    <resultMap id="userMap" type="SysUserModel">
+        <id property="id" column="id"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+        <collection property="roles" ofType="SysRoleModel">
+            <id property="id" column="role_id"/>
+            <result property="roleName" column="role_name"/>
+            <collection property="permissions" ofType="SysPermissionModel">
+                <id property="id" column="pId"/>
+                <result property="name" column="permissionName"/>
+                <result property="url" column="url"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="findById" parameterType="String" resultMap="userMap">
+        select t.id,t.nick_name,t.name,t.password,r.id as role_id,r.role_name,o.id as pId,o.name as permissionName,o.url
+        from sys_user t,sys_role r,sys_user_role l,sys_role_permission o
+        where t.id = #{id}
+              and l.user_id = t.id
+              and r.id = l.role_id
+              and o.role_id = r.id
+    </select>
+</mapper>
