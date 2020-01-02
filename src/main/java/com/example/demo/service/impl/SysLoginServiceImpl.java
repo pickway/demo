@@ -4,6 +4,7 @@ import com.example.demo.mapper.SysUserMapper;
 import com.example.demo.model.ResultModel;
 import com.example.demo.model.sys.SysUserModel;
 import com.example.demo.service.SysLoginService;
+import com.example.demo.utils.redis.RedisUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -28,8 +29,7 @@ public class SysLoginServiceImpl implements SysLoginService {
     public SysUserModel findByNickName(String nickName, String password) {
         SysUserModel user = sysUserMapper.findByNickName(nickName);
         if (user != null) {
-            SysUserModel logUser = sysUserMapper.findById(user.getId());
-            return logUser;
+            return sysUserMapper.findById(user.getId());
         }
         return null;
     }
@@ -39,13 +39,13 @@ public class SysLoginServiceImpl implements SysLoginService {
         // 获取Subject
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(nickName, password);
-        try{
+        try {
             subject.login(token);
             return ResultModel.ofData((SysUserModel) subject.getPrincipal());
-        } catch (UnknownAccountException e){
+        } catch (UnknownAccountException e) {
             e.printStackTrace();
             return ResultModel.error("用户名不存在！");
-        } catch (IncorrectCredentialsException e){
+        } catch (IncorrectCredentialsException e) {
             return ResultModel.error("密码错误！");
         }
     }

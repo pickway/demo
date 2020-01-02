@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * @Author: Weidong
@@ -15,7 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Data
 @Table(name = "SYS_USER")
-public class SysUserEntity {
+public class SysUserEntity implements Serializable {
 
     @Id
     private String id;
