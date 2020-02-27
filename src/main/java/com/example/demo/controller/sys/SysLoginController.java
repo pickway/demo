@@ -5,6 +5,7 @@ import com.example.demo.model.sys.SysUserModel;
 import com.example.demo.service.SysLoginService;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -22,7 +23,7 @@ public class SysLoginController {
     private SysLoginService sysLoginService;
 
     @PostMapping("/login")
-    public ResultModel login(String nickName, String password) {
-        return sysLoginService.login(nickName,password);
+    public ResultModel login(@RequestBody SysUserModel user) {
+        return sysLoginService.login(user.getNickName(),user.getPassword());
     }
 }
